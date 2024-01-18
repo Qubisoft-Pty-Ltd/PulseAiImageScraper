@@ -1,4 +1,5 @@
 import os
+import random
 from typing import KeysView
 import requests
 from selenium import webdriver
@@ -21,7 +22,7 @@ class WebScraper:
         self.floor_plan_local_path = 'scraped_photos\\floorplan'
         self.picture_number_incrementer = 0
         self.page_incrementer = 0
-        self.page_incrementer_stop = 1
+        self.page_incrementer_stop = 15
         self.context = PulseAiSqlite('../propertypulseai')
         self.floor_plan_classifer = ScraperFloorplanClassifier()
 
@@ -57,7 +58,9 @@ class WebScraper:
                         break
                     next_button.click()
                     # Wait for a moment to allow the new page to load
-                    time.sleep(2)
+                    random_sleep_time = random.uniform(1, 6)
+
+                    time.sleep(random_sleep_time)
                 else:
                     break  # No "Next" button found, exit the loop
 
@@ -102,7 +105,9 @@ class WebScraper:
                 if photo_button:
                     photo_button.click()
                     # Wait for a moment to allow the photo slideshow to load
-                    time.sleep(2)
+                    random_sleep_time = random.uniform(1, 6)
+
+                    time.sleep(random_sleep_time)
 
                     try:
                         img_elements = self.driver.find_elements(By.TAG_NAME, 'img')
@@ -202,7 +207,7 @@ if __name__ == "__main__":
     scraper = WebScraper()
 
     # URL of the website to scrape
-    target_url = "https://www.domain.com.au/sale/northcote-vic-3070/?excludeunderoffer=1"
+    target_url = "https://www.domain.com.au/sale/essendon-vic-3040/?excludeunderoffer=1"
 
     # Collect URLs from the website
     #scraped_urls = ['https://www.domain.com.au/19-21-niagara-lane-melbourne-vic-3000-2018725443']
